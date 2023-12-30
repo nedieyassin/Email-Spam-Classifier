@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'includes/appbar.html' %}
+    <div class="container mx-auto px-3">
+        <div class="w-full py-12">
+            <form method="post" action="/predict" class="flex flex-col gap-3">
+                <label for="email" class="font-semibold text-xl">Enter your email here</label>
+                <textarea
+                        id="email"
+                        class="w-full border-2 border-gray-800 focus:outline-0 p-4 bg-gray-100"
+                        rows="12"
+                        cols="60" name="content" placeholder="Enter your email here"
+                        autocomplete="off">{{ email }}</textarea>
+                <div class="flex justify-end gap-3">
+                    <a href="/" class="px-6 py-2 bg-gray-200 hover:bg-gray-400 text-black transition-all">
+                        Reset
+                    </a>
+                    <button type="submit" class="px-6 py-2 bg-gray-950 hover:bg-gray-800 text-white transition-all">
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        <div>
+            {% if email %}
+                <div class="bg-gray-100 p-4">
+                    <div>
+                        <h1 class="text-sm text-gray-500">
+                            This system assumes that you got this email from an unknown source. It is not guaranteed
+                            that
+                            the email is spam.
+                        </h1>
+                        <div>
+                            {% if prediction %}
+                                {% if prediction == 1 %}
+                                    <h2 class="font-bold text-3xl text-red-600">Spam</h2>
+                                {% else %}
+                                    <h2 class="font-bold text-3xl text-green-600">Not Spam</h2>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="py-6">
+                        <div class="font-semibold">Email:</div>
+                        <div class="py-6">
+                            {{ (email).replace('\n', '<br>')|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
