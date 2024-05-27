@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'includes/appbar.html' %}
+    <div class="container mx-auto px-3">
+        <div class="w-full py-12">
+            <h1 class="text-2xl font-bold">History</h1>
+            <div class="space-y-4 py-8">
+                {% for email in emails %}
+                    <div class="shadow space-y-2 rounded-2xl bg-white p-4 border-2 border-black">
+                        <div>
+                            {{ email[1].replace('\n', '<br>')|safe }}
+                        </div>
+                        <div class="flex items-center gap-3">
+                            {% if email[2] == 'Spam' %}
+                                <h2 class="font-bold text-xl text-red-600">Spam</h2>
+                            {% else %}
+                                <h2 class="font-bold text-xl text-green-600">Not Spam</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
